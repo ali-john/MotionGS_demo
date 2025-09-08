@@ -1,0 +1,51 @@
+{
+  "MODEL_URL": "https://huggingface.co/your-username/gaussian-streaming-dataset/resolve/main/data/default_streaming.bin",
+  "MAX_FRAME": 120,
+  "FPS": 24,
+  "GOP_SIZE": 24,
+  "COMPRESSION_ENABLED": true,
+  
+  "SLICE_NUM": 8,
+  "TOTAL_CAP": 150000,
+  "STREAM_ROW_LENGTH": 36,
+  "VERTEX_ROW_LENGTH": 32,
+  
+  "W": 1920,
+  "H": 1080,
+  "SH_DEGREE": 3,
+  "PREFETCH_SEC": 2.0,
+  
+  "fx": 1834.88,
+  "fy": 1834.55,
+  "INIT_VIEW": [
+    0.9999727319388764, -0.0007335337134094191, 0.007348285990037004, 0,
+    -0.0008200432778977561, -0.9999303163911514, 0.011776667224411872, 0,
+    0.007339135352509657, -0.011782372010060363, -0.9999036517595554, 0,
+    0.007232260564530732, 0.809987791156739, 5.33903731414556, 1
+  ],
+  
+  "compression_info": {
+    "original_bandwidth_mbps": 22.0,
+    "compressed_bandwidth_mbps": 6.6,
+    "compression_ratio": 0.70,
+    "iframe_interval": 24,
+    "average_pframe_size_kb": 180,
+    "average_iframe_size_kb": 1200
+  },
+  
+  "scene_info": {
+    "name": "Enhanced Default Scene",
+    "description": "Dynamic Gaussian splatting with GoP temporal compression",
+    "duration_seconds": 5.0,
+    "total_gaussians": 150000,
+    "scene_bounds": [[-2.5, -2.5, -2.5], [2.5, 2.5, 2.5]],
+    "camera_count": 1
+  },
+  
+  "performance_hints": {
+    "target_fps": 24,
+    "min_bandwidth_mbps": 6.6,
+    "recommended_prefetch_frames": 48,
+    "adaptive_quality": true
+  }
+}
