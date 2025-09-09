@@ -60,11 +60,11 @@ let camera = cameras[0];
 
 // streaming specific variables
 let currentFrame = 0;
-let maxFrame = 120;
+let maxFrame = 96;
 let gopSize = 24;
 let isPlaying = false;
 let frameInterval = null;
-let baseUrl = "";
+let baseUrl = "./GaussVideo";
 let fps = 24;
 
 // Global worker variable
@@ -713,7 +713,7 @@ async function loadFrame(frameNum, forceIFrame = false) {
     try {
         if (isIFrame) {
             // Load I-frame (standard PLY or splat file)
-            const iFrameUrl = `${baseUrl}/frame_${frameNum.toString().padStart(3, '0')}.ply`;
+            const iFrameUrl = `${baseUrl}/frame${frameNum.toString().padStart(6, '0')}/frame${frameNum.toString().padStart(6, '0')}.ply`;
             const response = await fetch(iFrameUrl);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const iFrameData = await response.arrayBuffer();
@@ -727,8 +727,8 @@ async function loadFrame(frameNum, forceIFrame = false) {
         } else {
             // Load P-frame: residual data + reusable indices
             const [residualResponse, reusableResponse] = await Promise.all([
-                fetch(`${baseUrl}/frame_${frameNum.toString().padStart(3, '0')}_residual.ply`),
-                fetch(`${baseUrl}/frame_${frameNum.toString().padStart(3, '0')}_reusable.json`)
+                fetch(`${baseUrl}/frame${frameNum.toString().padStart(6, '0')}/frame${frameNum.toString().padStart(6, '0')}_residual.ply`),
+                fetch(`${baseUrl}/frame${frameNum.toString().padStart(6, '0')}/frame${frameNum.toString().padStart(6, '0')}_reusable.json`)
             ]);
             
             if (!residualResponse.ok) throw new Error(`Residual HTTP ${residualResponse.status}`);
@@ -811,7 +811,7 @@ async function loadConfig(configUrl) {
         const response = await fetch(configUrl);
         const config = await response.json();
         
-        maxFrame = config.MAX_FRAME || 120;
+        maxFrame = config.MAX_FRAME || 96;
         gopSize = config.GOP_SIZE || 24;
         fps = config.FPS || 24;
         
@@ -828,7 +828,7 @@ async function main() {
     const params = new URLSearchParams(location.search);
     
     // Load configuration
-    const configUrl = params.get("config") || "config_enhanced_default.json";
+    const configUrl = params.get("config") || "./config_enhanced_default.json";
     const config = await loadConfig(configUrl);
     
     try {
@@ -837,7 +837,8 @@ async function main() {
     } catch (err) {}
     
     // Set base URL for frame data
-    baseUrl = params.get("url") || "https://huggingface.co/datasets/alijohn/GaussStream/resolve/main/data";
+    //baseUrl = params.get("url") || "https://huggingface.co/datasets/alijohn/GaussStream/resolve/main/data";
+    baseUrl = params.get("url") || config.BASE_URL || "./GaussVideo";
     
     const downsample = 1 / devicePixelRatio;
     console.log("Downsample factor:", downsample);

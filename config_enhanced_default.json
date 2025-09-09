@@ -1,6 +1,6 @@
 {
   "MODEL_URL": "https://huggingface.co/your-username/gaussian-streaming-dataset/resolve/main/data/default_streaming.bin",
-  "MAX_FRAME": 120,
+  "MAX_FRAME": 96,
   "FPS": 24,
   "GOP_SIZE": 24,
   "COMPRESSION_ENABLED": true,
